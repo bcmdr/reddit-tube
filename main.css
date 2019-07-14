@@ -30,8 +30,8 @@ form input {
 }
 
 .player {
-    width: 100vw;
-    height: 85vh;
+    width: 100%;
+    min-height: 80vh;
 }
 
 .controls {
