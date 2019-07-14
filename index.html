@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>RedditTube Theatre</title>
+    <link href="./main.css" rel="stylesheet">
+    <script defer src="./app.js"></script>
+</head>
+
+<body>
+    <main>
+        <form id="subreddit-selector">
+            <label>reddit.com/r/</label><input id="subreddit-input" type="text" value="videos" />
+            <button type="submit">Go</button>
+        </form>
+        <div id="player" class="player"></div>
+        <div class="controls">
+            <a onclick="video.prev()" class="control">Previous</a>
+            <a onclick="video.next()" class="control">Next</a>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+body {
+    background: black;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+form button {
+    background: black;
+    border: 1px solid white;
+    color: white;
+    padding: 5px;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+form button:hover {
+    background: white;
+    color: black;
+}
+
+form input {
+    font-size: .8em;
+    background: black;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    padding: 5px;
+}
+
+.player {
+    width: 100vw;
+    height: 85vh;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
+
+.control {
+    cursor: pointer;
+    background: black;
+    color: white;
+    padding: 1.2rem;
+}
+
+#subreddit-selector {
+    font-size: 1.2em;
+    background: black;
+    color: white;
+    padding: 1.2rem;
+}
