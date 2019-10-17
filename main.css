@@ -6,6 +6,19 @@ body {
     font-family: sans-serif;
 }
 
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+header {
+    padding: 1.2rem;
+}
+
 form button {
     background: black;
     border: 1px solid white;
@@ -32,10 +45,10 @@ form input {
 
 .player {
     width: 100%;
-    min-height: 80vh;
+    min-height: 75vh;
 }
 
-.controls {
+.flex-space-between {
     display: flex;
     justify-content: space-between;
 }
@@ -51,5 +64,4 @@ form input {
     font-size: 1.2em;
     background: black;
     color: white;
-    padding: 1.2rem;
 }

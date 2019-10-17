@@ -2,19 +2,24 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Watch a series of Youtube videos from the chosen subreddit.">
     <title>RedditTube Theatre</title>
     <link href="./main.css" rel="stylesheet">
     <script defer src="./app.js"></script>
 </head>
 
 <body>
-    <main>
+    <header>
         <form id="subreddit-selector">
             <label>reddit.com/r/</label><input id="subreddit-input" type="text" value="videos" />
             <button type="submit">Go</button>
         </form>
+        <a id="video-reddit-link" href="#"><h2 id="video-heading"></h2></a>
+    </header>
+    <main>
         <div id="player" class="player"></div>
-        <div class="controls">
+        <div class="controls flex-space-between">
             <a onclick="video.prev()" class="control">Previous</a>
             <a onclick="video.next()" class="control">Next</a>
         </div>
