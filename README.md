@@ -1,2 +1,2 @@
 # reddit-tube
-Endless viewing of youtube videos on a chosen subreddit.
+View a series of youtube videos from a chosen subreddit.

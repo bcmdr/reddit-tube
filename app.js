@@ -14,22 +14,29 @@ const video = {
         this.jump(1);
     },
     jump(amount) {
-        this.current = (this.current + amount) % this.sources.length;
+        this.current = (this.current + amount) % this.sources.length; // wrap to beginning
         if (this.current < 0) {
             this.current = this.sources.length - 1;
         }
         this.play();
     },
+    updateDescription() {
+        let source = this.sources[this.current];
+        document.getElementById("video-heading").textContent = source.description;
+        document.getElementById("video-reddit-link").href = "https://www.reddit.com" + source.permalink;
+    },
     play() {
         let source = this.sources[this.current];
+        this.updateDescription();
         this.player.loadVideoById(source.id);
     }
 }
 
 function parseYoutubeUrl (url) {
     // source: https://stackoverflow.com/questions/2499567/how-to-make-a-json-call-to-a-url/2499647#2499647
-    var regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
-    var match = url.match(regExp);
+    let regExp = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    // match contains youtube url at [0] and 11-length id at [1]
     return (match && match[1].length == 11) ? match[1] : false;
 }
 
@@ -40,22 +47,27 @@ function loadVideosAndPlayer(redditUrl) {
         // Reset video storage
         video.sources = [];
         video.current = 0;
+        video.total = 0;
 
         // Get Video Ids from Reddit
         let posts = data.data.children;
+        video.total = posts.length;
         posts.forEach(data => {
             let post = data.data;
             let id = parseYoutubeUrl(post.url);
+            let description = post.title;
+            let permalink = post.permalink;
             if (id) {
-                video.sources.push({id});
+                video.sources.push({id, description, permalink});
             }
         })
+        video.updateDescription()
 
         // Then Prepare Video Player
         if (!video.playerLoaded) {
-            preparePlayer()
+            preparePlayer();
         } else {
-            video.play()
+            video.play();
         }
     })
 }
@@ -68,15 +80,14 @@ function preparePlayer() {
 }
 
 function onYouTubeIframeAPIReady() {
-    const onPlayerStateChange = function (event) {
-        if (event.data === 0) {
-            video.next()
-        }
-    }
     video.player = new YT.Player('player', {
         videoId: video.currentId,
         events: {
-            'onStateChange': onPlayerStateChange
+            'onStateChange': (event) => {
+                if (event.data === 0) {
+                    video.next()
+                }
+            }
         }
     })
     video.playerLoaded = true;
@@ -89,12 +100,11 @@ function playSubredditVideos() {
 }
 
 function prepareSubredditForm() {
-    const handleSubmit = function () {
-        event.preventDefault();
-        playSubredditVideos();
-    }
     const form = document.getElementById('subreddit-selector');
-    form.addEventListener('submit', handleSubmit);
+    form.addEventListener('submit', () => {
+        event.preventDefault(); // Don't reload page. 
+        playSubredditVideos();
+    });
 }
 
 function main() {
