@@ -94,9 +94,10 @@ function onYouTubeIframeAPIReady() {
 }
 
 function playSubredditVideos() {
-    let subreddit = document.getElementById('subreddit-input').value
-    let url = 'https://www.reddit.com/r/' + subreddit + '.json'
-    loadVideosAndPlayer(url)
+    let subreddit = document.getElementById('subreddit-input').value;
+    let limit = 100
+    let url = 'https://www.reddit.com/r/' + subreddit + '.json' + '?' + 'limit=' + limit;
+    loadVideosAndPlayer(url);
 }
 
 function prepareSubredditForm() {
