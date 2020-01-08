@@ -95,7 +95,7 @@ function onYouTubeIframeAPIReady() {
 
 function playSubredditVideos() {
     let subreddit = document.getElementById('subreddit-input').value;
-    let limit = 100
+    let limit = 100;
     let url = 'https://www.reddit.com/r/' + subreddit + '.json' + '?' + 'limit=' + limit;
     loadVideosAndPlayer(url);
 }
@@ -108,12 +108,27 @@ function prepareSubredditForm() {
     });
 }
 
+function prepareKeyHandlers() {
+    document.addEventListener('keyup', (event) => {
+        const handlers = {
+            'ArrowRight': function () {
+                video.next()
+            }, 
+            'ArrowLeft': function () {
+                video.prev();
+            }
+        }
+        handlers[event.key]();
+    });
+}
+
 function main() {
     prepareSubredditForm();
+    prepareKeyHandlers();
     playSubredditVideos();
 }
 
-main() // run this function on page load
+main(); // run this function on page load
 
 
 
