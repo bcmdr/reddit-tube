@@ -1,7 +1,12 @@
 // Video Control
 const video = {
+    playing: false,
     playerLoaded: false,
-    player: {},
+    player: {
+        playVideo() {
+            return; // implemented when player loads
+        }
+    },
     sources: [],
     current: 0,
     get currentId() {
@@ -64,11 +69,8 @@ function loadVideosAndPlayer(redditUrl) {
         video.updateDescription()
 
         // Then Prepare Video Player
-        if (!video.playerLoaded) {
-            preparePlayer();
-        } else {
-            video.play();
-        }
+        if (!video.playerLoaded) preparePlayer();
+
     })
 }
 
@@ -84,8 +86,18 @@ function onYouTubeIframeAPIReady() {
         videoId: video.currentId,
         events: {
             'onStateChange': (event) => {
-                if (event.data === 0) {
-                    video.next()
+                switch(event.data) {
+                    case 0:
+                        video.next();
+                        break;
+                    case 1:
+                        video.playing = true;
+                        break;
+                    case 2:
+                        video.playing = false;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -116,8 +128,25 @@ function prepareKeyHandlers() {
             }, 
             'ArrowLeft': function () {
                 video.prev();
+            },
+            'Enter': function () {
+                let input = document.getElementById('subreddit-input');
+                input.focus();
+                input.select();
+            }
+            ,
+            'Escape': function () {
+                document.getElementById('subreddit-input').blur();
+            },
+            ' ': function () {
+                if (video.playing) {
+                    video.player.pauseVideo();
+                } else {
+                    video.player.playVideo();
+                };
             }
         }
+        if (!handlers[event.key]) return;
         handlers[event.key]();
     });
 }
