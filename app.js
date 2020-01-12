@@ -2,11 +2,6 @@
 const video = {
     playing: false,
     playerLoaded: false,
-    player: {
-        playVideo() {
-            return; // implemented when player loads
-        }
-    },
     sources: [],
     current: 0,
     get currentId() {
@@ -33,7 +28,7 @@ const video = {
     play() {
         let source = this.sources[this.current];
         this.updateDescription();
-        this.player.loadVideoById(source.id);
+        if (this.player) this.player.loadVideoById(source.id);
     }
 }
 
@@ -69,7 +64,11 @@ function loadVideosAndPlayer(redditUrl) {
         video.updateDescription()
 
         // Then Prepare Video Player
-        if (!video.playerLoaded) preparePlayer();
+        if (!video.playerLoaded) {
+            preparePlayer();
+        }
+
+        video.play();
 
     })
 }
