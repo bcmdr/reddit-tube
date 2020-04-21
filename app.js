@@ -22,7 +22,7 @@ const video = {
     },
     updateDescription() {
         let source = this.sources[this.current];
-        document.getElementById("video-heading").textContent = source.description;
+        document.getElementById("video-reddit-link").textContent = source.description;
         document.getElementById("video-reddit-link").href = "https://www.reddit.com" + source.permalink;
     },
     play() {
